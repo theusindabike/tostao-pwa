@@ -10,12 +10,12 @@ import axios from 'axios';
 Vue.use(VueAxios, axios)
 
 Vue.use(VueAuthenticate, {
-  baseUrl: 'http://localhost:8000/', // Your API domain
-  
+  tokenName: 'access_token',
   providers: {
     google: {
       clientId: process.env.VUE_APP_GOOGLE_OAUTH_CLIENT_ID,
-      redirectUri: 'http://localhost:8080/about' // Your client app URL
+      redirectUri: process.env.VUE_APP_AUTH_REDIRECT_URI,
+      url: process.env.VUE_APP_AUTH_API_URL
     }
   }
 })
