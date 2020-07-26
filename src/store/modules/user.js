@@ -1,38 +1,38 @@
-import Vue from 'vue'
-
-const vueAuth = Vue.VueAuthenticate
+import userAPI from '@/api/user.api';
 
 const state = {
+    profile: {},
     isAuthenticated: false
 }
 
-const getters = {
-    isAuthenticated () {
-        return vueAuth.isAuthenticated()
-    }
-}
-
 const mutations = {
-    isAuthenticated (state, payload) {
-        state.isAuthenticated = payload.isAuthenticated
+    setUser(state, user) {
+        state.profile = user;
+    },
+    setAuthenticated(state, authenticated) {
+        state.isAuthenticated = authenticated;
     }
 }
 
 const actions = {
-    login (context, payload) {
-        vueAuth.login(payload.user, payload.requestOptions).then((response) => {
-            console.info('responsona', response)
-            context.commit('isAuthenticated', {
-                isAuthenticated: vueAuth.isAuthenticated()
-            })
-        })
-    }
+    signIn() {
+        userAPI.authenticate();
+    },
+    // async validateUser({ commit }) {
+    //     try {
+    //         const isValid = await userAPI.validateUser();
+    //         commit('setUser', userAPI.getCurrentUser());
+    //         commit('setAuthenticated', isValid);
+    //         return isValid;
+    //     } catch (error) {
+    //         return false;
+    //     }
+    // }
 }
 
 export default {
     namespaced: true,
     state,
-    getters,
     mutations,
     actions
 }
